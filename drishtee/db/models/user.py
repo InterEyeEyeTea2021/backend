@@ -57,3 +57,15 @@ class UserSHGMember(Base):
     shg = relationship(
         "UserSHG", backref=backref("user_sme", uselist=False)
     )
+
+class PrevProjects(Base):
+    __tablename__ = "prev_projects"
+    
+    id = Column(Integer, primary_key=True)
+    description = Column("description", String(64))
+    tags = Column("tags", String(32))
+    skills = Column("skills", String(32))
+    shg_id = Column("shg_id", ForeignKey("user_shg.id"))
+    shg = relationship(
+        "UserSHG", backref=backref("user_shg", uselist=False)
+    )
