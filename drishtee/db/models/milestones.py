@@ -4,7 +4,6 @@ from sqlalchemy.orm import backref, relationship
 from drishtee.db.base import Base
 
 class Milestone(Base):
-    __tablename__ = "milestone"
 
     id = Column(Integer, primary_key=True)
     description = Column("description", String(64))

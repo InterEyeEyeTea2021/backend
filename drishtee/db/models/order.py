@@ -4,7 +4,6 @@ from sqlalchemy.orm import backref, relationship
 from drishtee.db.base import Base
 
 class Order(Base):
-    __tablename__ = "order"
 
     id = Column(Integer, primary_key=True)
     state = Column("state", String(32))

@@ -4,7 +4,6 @@ from sqlalchemy.orm import backref, relationship
 from drishtee.db.base import Base
 
 class BankDetails(Base):
-    __tablename__ = "bank_details"
     
     id = Column(Integer, primary_key=True)
     ifsc_code = Column("ifsc_code", String(32))

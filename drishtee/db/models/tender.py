@@ -4,7 +4,6 @@ from sqlalchemy.orm import backref, relationship
 from drishtee.db.base import Base
 
 class Tender(Base):
-    __tablename__ = "tender"
 
     id = Column(Integer, primary_key=True)
     state = Column("state", String(32))

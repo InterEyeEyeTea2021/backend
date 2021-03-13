@@ -5,7 +5,6 @@ from sqlalchemy.schema import UniqueConstraint
 from drishtee.db.base import Base
 
 class UserSME(Base):
-    __tablename__ = "user_sme"
     
     id = Column(Integer, primary_key=True)
     created_at = Column("created_at", DateTime)
@@ -23,7 +22,6 @@ class UserSME(Base):
     )
     
 class UserSHG(Base):
-    __tablename__ = "user_shg"
 
     id = Column(Integer, primary_key=True)
     created_at = Column("created_at", DateTime)
@@ -43,7 +41,6 @@ class UserSHG(Base):
     )
 
 class UserSHGMember(Base):
-    __tablename__ = "user_shg_member"
 
     id = Column(Integer, primary_key=True)
     
@@ -59,7 +56,6 @@ class UserSHGMember(Base):
     )
 
 class PrevProjects(Base):
-    __tablename__ = "prev_projects"
     
     id = Column(Integer, primary_key=True)
     description = Column("description", String(64))
