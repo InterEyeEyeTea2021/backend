@@ -13,7 +13,7 @@ Base = declarative_base()
 
 
 def session_factory():
-    from drishtee.db.models import user
+    from drishtee.db.models import UserSME, UserSHG, PrevProjects, UserSHGMember, BankDetails, Media, Milestone, Order, Tender, Bid
 
     Base.metadata.create_all(engine)
     return _SessionFactory()
