@@ -3,6 +3,7 @@ from sqlalchemy.orm import backref, relationship
 
 from drishtee.db.base import Base
 
+
 class Media(Base):
     __tablename__ = "media"
 
@@ -11,6 +12,7 @@ class Media(Base):
     type_ = Column("type", String(32))
 
     milestone_id = Column(Integer, ForeignKey("milestone.id"))
+    order_id = Column(Integer, ForeignKey("order.id"))
     tender_id = Column(Integer, ForeignKey("tender.id"))
 
     def __init__(self, uri, type_):
