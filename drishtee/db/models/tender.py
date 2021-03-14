@@ -15,3 +15,12 @@ class Tender(Base):
     sme = relationship(
         "UserSME", backref=backref("user_sme", uselist=False)
     )
+
+class Bid(Base):
+
+    id = Column(Integer, primary_key=True)
+    bid_amount = Column("bid_amount", Integer)
+    shg_id = Column("shg_id", ForeignKey("user_shg.id"))
+    shg = relationship(
+        "UserSHG", backref=backref("user_shg", uselist=False)
+    )
