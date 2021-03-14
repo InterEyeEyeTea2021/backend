@@ -5,6 +5,8 @@ from drishtee.db.base import Base
 
 class Milestone(Base):
 
+    __tablename__ = "milestone"
+
     id = Column(Integer, primary_key=True)
     description = Column("description", String(64))
     status = Column("status", String(32))
@@ -12,3 +14,8 @@ class Milestone(Base):
     
     tender_id = Column(Integer, ForeignKey("tender.id"))
     order_id = Column(Integer, ForeignKey("order.id"))
+
+    def __init__(self, description, status, media=None):
+        self.description = description
+        self.status = status
+        self.media = media
