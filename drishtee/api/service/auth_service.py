@@ -88,18 +88,19 @@ class AuthService:
                         login_info = {
                             'id': current_user.id,
                             'username': current_user.username,
+                            'user_type': "SHG"
                         }
                         return login_info, 200
                     else:
                         response_object = {
                             'status': 'fail',
-                            'message': 'Please verify your email before first login',
+                            'message': 'Please verify your Username before first login',
                         }
                         return response_object, 402
                 else:
                     response_object = {
                         'status': 'fail',
-                        'message': 'email or password does not match.',
+                        'message': 'Username or password does not match.',
                     }
                     return response_object, 401
 
@@ -145,23 +146,99 @@ class AuthService:
                         login_info = {
                             'id': user.id,
                             'username': user.username,
+                            'user_type': "SME"
                         }
                         return login_info, 200
                     else:
                         response_object = {
                             'status': 'fail',
-                            'message': 'Please verify your email before first login',
+                            'message': 'Please verify your Username before first login',
                         }
                         return response_object, 402
                 else:
                     response_object = {
                         'status': 'fail',
-                        'message': 'email or password does not match.',
+                        'message': 'Username or password does not match.',
                     }
                     return response_object, 401
 
         except BaseException:
             LOG.error('Login Failed', exc_info=True)
+            response_object = {
+                'status': 'fail',
+                'message': 'Try again',
+            }
+            return response_object, 500
+
+    @staticmethod
+    def signup_SME(data):
+        try:
+            with session_scope() as session:
+                user = session.query(models.UserSME).filter(
+                    models.UserSME.username == data.get("username")).first()
+
+                if user is not None:
+                    response_object = {
+                        'status': 'invalid',
+                        'message': 'Username Already Registered',
+                    }
+                    LOG.info(
+                        'Username already present in database. Redirect to Login Page')
+                    return response_object, 401
+
+                bank = models.BankDetails(
+                    data.get("account_number"), data.get("branch_code"))
+
+                user = models.UserSME(data.get("name"), data.get("username"), data.get(
+                    "password"), data.get("phone"), data.get("WAContact"), data.get("industry_type"), bank)
+
+                session.add(user)
+            response_object = {
+                'status': 'success',
+                'message': 'User added Successfully',
+            }
+
+            return response_object, 200
+        except BaseException as e:
+            print(e)
+            response_object = {
+                'status': 'fail',
+                'message': 'Try again',
+            }
+            return response_object, 500
+
+    @staticmethod
+    def signup_SHG(data):
+        try:
+            with session_scope() as session:
+                user = session.query(models.UserSHG).filter(
+                    models.UserSHG.username == data.get("username")).first()
+
+                if user is not None:
+                    response_object = {
+                        'status': 'invalid',
+                        'message': 'Username Already Registered',
+                    }
+                    LOG.info(
+                        'Username already present in database. Redirect to Login Page')
+                    return response_object, 401
+
+                bank = models.BankDetails(
+                    data.get("account_number"), data.get("branch_code"))
+
+                user = models.UserSHG(data.get("name"), data.get("username"), data.get(
+                    "password"), data.get("phone"), data.get("WAContact"), data.get("name_SHG"),
+                    data.get("industry_type"), data.get("production_cap"), data.get("order_size"), bank)
+
+                session.add(user)
+            response_object = {
+                'status': 'success',
+                'message': 'User added Successfully',
+            }
+
+            return response_object, 200
+        except BaseException as e:
+            print(e)
             response_object = {
                 'status': 'fail',
                 'message': 'Try again',

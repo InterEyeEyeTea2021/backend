@@ -19,21 +19,23 @@ class UserSME(UserMixin, Base):
     id = Column(Integer, primary_key=True)
     created_at = Column("created_at", DateTime)
 
-    name = Column("name", String(32), nullable=False)
-    username = Column("username", String(32), nullable=False)
-    password = Column("password", String(32), nullable=False)
+    name = Column("name", String(128), nullable=False)
+    username = Column("username", String(128), nullable=False)
+    password = Column("password", String(128), nullable=False)
     phone = Column("phone", String(13))
+    WAContact = Column("WAContact", String(13))
 
-    industry_type = Column("industry_type", String(32))
+    industry_type = Column("industry_type", String(128))
 
     bank_details_id = Column("bank_details_id", ForeignKey("bank_details.id"))
     bank_details = relationship("BankDetails")
 
-    def __init__(self, name, username, password, phone, industry_type, bank_details=None):
+    def __init__(self, name, username, password, phone, WAContact, industry_type, bank_details=None):
         self.name = name
         self.username = username
-        self.password = password
+        self.password = generate_password_hash(password).decode("utf-8")
         self.phone = phone
+        self.WAContact = WAContact
         self.industry_type = industry_type
         self.bank_details = bank_details
         self.created_at = datetime.now()
@@ -74,23 +76,27 @@ class UserSHG(UserMixin, Base):
     id = Column(Integer, primary_key=True)
     created_at = Column("created_at", DateTime)
 
-    name = Column("name", String(32), nullable=False)
-    username = Column("username", String(32), nullable=False)
-    password = Column("password", String(32), nullable=False)
+    name = Column("name", String(128), nullable=False)
+    username = Column("username", String(128), nullable=False)
+    password = Column("password", String(128), nullable=False)
     phone = Column("phone", String(13))
+    WAContact = Column("WAContact", String(13))
 
-    industry_type = Column("industry_type", String(32))
-    prod_capacity = Column("prod_capacity", String(32))
-    order_size = Column("order_size", String(32))
+    SHG_Name = Column("SHG_Name", String(128))
+    industry_type = Column("industry_type", String(128))
+    prod_capacity = Column("prod_capacity", String(128))
+    order_size = Column("order_size", String(128))
 
     bank_details_id = Column("bank_details_id", ForeignKey("bank_details.id"))
     bank_details = relationship("BankDetails")
 
-    def __init__(self, name, username, password, phone, industry_type, prod_capacity, order_size, bank_details=None):
+    def __init__(self, name, username, password, phone, WAContact, SHG_Name, industry_type, prod_capacity, order_size, bank_details=None):
         self.name = name
         self.username = username
-        self.password = password
+        self.password = generate_password_hash(password).decode("utf-8")
         self.phone = phone
+        self.WAContact = WAContact
+        self.SHG_Name = SHG_Name
         self.industry_type = industry_type
         self.prod_capacity = prod_capacity
         self.order_size = order_size
