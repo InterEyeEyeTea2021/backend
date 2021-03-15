@@ -1,7 +1,6 @@
 from flask import abort, request
 from flask_restx import Namespace, Resource, reqparse
 
-from drishtee.api.service.tender_service import TenderService
 from drishtee.api.dto import BidDto
 from drishtee.api.service.bid_service import BidService
 

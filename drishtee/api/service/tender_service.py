@@ -66,6 +66,7 @@ class TenderService:
                     session.add(new_mile_media)
                 session.flush()
                 new_milestone = Milestone(milestone["description"], "pending", milestone_media)
+                session.add(new_milestone)
             session.flush()
             new_tender = Tender("created", description, media_obj, milestone_obj, user_sme)
             if new_tender:
