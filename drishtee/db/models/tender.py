@@ -13,6 +13,7 @@ class Tender(Base):
 
     media = relationship("Media")
     milestones = relationship("Milestone")
+    bids = relationship("Bid", back_populates="tender")
     sme_id = Column("sme_id", ForeignKey("user_sme.id"))
     sme = relationship("UserSME")
 
@@ -22,6 +23,7 @@ class Tender(Base):
         self.media = media
         self.milestones = milestones
         self.sme = sme
+        self.bids = []
 
 
 class Bid(Base):
@@ -29,11 +31,12 @@ class Bid(Base):
 
     id = Column(Integer, primary_key=True)
     bid_amount = Column("bid_amount", Integer)
+    tender_id = Column(Integer, ForeignKey("tender.id"))
+    tender = relationship("Tender", back_populates="bids")
     shg_id = Column("shg_id", ForeignKey("user_shg.id"))
-    shg = relationship(
-        "UserSHG"
-    )
+    shg = relationship("UserSHG")
 
-    def __init__(bid_amount, shg):
+    def __init__(self, bid_amount, shg, tender):
         self.bid_amount = bid_amount
         self.shg = shg
+        self.tender = tender

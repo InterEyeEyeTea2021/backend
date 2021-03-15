@@ -43,7 +43,7 @@ class TenderService:
             if tender:
                 data = {
                     "success": True,
-                    "tender": format_response(session, tender[0])
+                    "data": format_response(session, tender[0])
                 }
                 return data, 200
             return {"success": False}, 404
@@ -70,6 +70,10 @@ class TenderService:
             new_tender = Tender("created", description, media_obj, milestone_obj, user_sme)
             if new_tender:
                 session.add(new_tender)
-                return format_response(session, new_tender), 200
+                response_data = {
+                    "success": True,
+                    "data": format_response(session, new_tender)
+                }
+                return response_data, 200
             return {"success": False}, 400
                 

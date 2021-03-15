@@ -10,6 +10,8 @@ class DataDto:
 class TenderDto:
     ns = Namespace("Tender", description="Tender operations")
 
+class BidDto:
+    ns = Namespace("Bids", description="Bid operations")
 # class PostDto(Schema):
 #     caption = fields.String()
 #     share_date = fields.DateTime()
