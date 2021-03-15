@@ -15,6 +15,7 @@ api = Api(
     version="1.0",
     description="a boilerplate for flask restplus web service",
 )
+
 api.add_namespace(tender_ns, path="/tender")
 api.add_namespace(bid_ns, path="/bid")
 api.add_namespace(milestone_ns, path="/milestone")

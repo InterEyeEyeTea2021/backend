@@ -11,6 +11,6 @@ class BankDetails(Base):
     ifsc_code = Column("ifsc_code", String(32))
     account_no = Column("account_no", String(32))
 
-    def __init__(self, ifsc_code, account_no):
+    def __init__(self, account_no, ifsc_code):
         self.ifsc_code = ifsc_code
         self.account_no = account_no

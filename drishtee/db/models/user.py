@@ -1,67 +1,133 @@
+from flask_bcrypt import check_password_hash, generate_password_hash
+from flask_login import UserMixin
+
+from flask_jwt_extended import decode_token
+
+
 from sqlalchemy import Column, DateTime, ForeignKey, Integer, String
 from sqlalchemy.orm import backref, relationship
-from sqlalchemy.schema import UniqueConstraint
 from datetime import datetime
 
-from drishtee.db.base import Base
+from drishtee.manage import login_manager
+from drishtee.db.base import Base, session_scope
 
 
-class UserSME(Base):
+class UserSME(UserMixin, Base):
 
     __tablename__ = "user_sme"
 
     id = Column(Integer, primary_key=True)
     created_at = Column("created_at", DateTime)
 
-    name = Column("name", String(32), nullable=False)
-    username = Column("username", String(32), nullable=False)
-    password = Column("password", String(32), nullable=False)
+    name = Column("name", String(128), nullable=False)
+    username = Column("username", String(128), nullable=False)
+    password = Column("password", String(128), nullable=False)
     phone = Column("phone", String(13))
+    WAContact = Column("WAContact", String(13))
 
-    industry_type = Column("industry_type", String(32))
+    industry_type = Column("industry_type", String(128))
 
     bank_details_id = Column("bank_details_id", ForeignKey("bank_details.id"))
     bank_details = relationship("BankDetails")
 
-    def __init__(self, name, username, password, phone, industry_type, bank_details=None):
+    def __init__(self, name, username, password, phone, WAContact, industry_type, bank_details=None):
         self.name = name
         self.username = username
-        self.password = password
+        self.password = generate_password_hash(password).decode("utf-8")
         self.phone = phone
+        self.WAContact = WAContact
         self.industry_type = industry_type
         self.bank_details = bank_details
         self.created_at = datetime.now()
 
+    def check_password(self, password):
+        return check_password_hash(self.password, password)
 
-class UserSHG(Base):
+    @staticmethod
+    @login_manager.user_loader
+    def load_user(id):
+        with session_scope() as session:
+            user = session.query(UserSME).filter(UserSME.id == id).first()
+            return user
+
+    @staticmethod
+    @login_manager.request_loader
+    def load_user_from_request(request):
+        try:
+            with session_scope() as session:
+                token = request.headers.get('Authorization')
+                if token:
+                    user_id = decode_token(token)
+                    username = user_id['identity']
+                    user = session.query(UserSME).filter(
+                        UserSME.username == username).first()
+                    if user:
+                        print(user)
+                        return user
+
+        except Exception as e:
+            return None
+
+
+class UserSHG(UserMixin, Base):
 
     __tablename__ = "user_shg"
 
     id = Column(Integer, primary_key=True)
     created_at = Column("created_at", DateTime)
 
-    name = Column("name", String(32), nullable=False)
-    username = Column("username", String(32), nullable=False)
-    password = Column("password", String(32), nullable=False)
+    name = Column("name", String(128), nullable=False)
+    username = Column("username", String(128), nullable=False)
+    password = Column("password", String(128), nullable=False)
     phone = Column("phone", String(13))
+    WAContact = Column("WAContact", String(13))
 
-    industry_type = Column("industry_type", String(32))
-    prod_capacity = Column("prod_capacity", String(32))
-    order_size = Column("order_size", String(32))
+    SHG_Name = Column("SHG_Name", String(128))
+    industry_type = Column("industry_type", String(128))
+    prod_capacity = Column("prod_capacity", String(128))
+    order_size = Column("order_size", String(128))
 
     bank_details_id = Column("bank_details_id", ForeignKey("bank_details.id"))
     bank_details = relationship("BankDetails")
 
-    def __init__(self, name, username, password, phone, industry_type, prod_capacity, order_size, bank_details=None):
+    def __init__(self, name, username, password, phone, WAContact, SHG_Name, industry_type, prod_capacity, order_size, bank_details=None):
         self.name = name
         self.username = username
-        self.password = password
+        self.password = generate_password_hash(password).decode("utf-8")
         self.phone = phone
+        self.WAContact = WAContact
+        self.SHG_Name = SHG_Name
         self.industry_type = industry_type
         self.prod_capacity = prod_capacity
         self.order_size = order_size
         self.bank_details = bank_details
         self.created_at = datetime.now()
+
+    def check_password(self, password):
+        return check_password_hash(self.password, password)
+
+    @staticmethod
+    @login_manager.user_loader
+    def load_user(id):
+        with session_scope() as session:
+            return session.query(UserSHG).filter(UserSHG.id == id).first()
+
+    @staticmethod
+    @login_manager.request_loader
+    def load_user_from_request(request):
+        try:
+            with session_scope() as session:
+                token = request.headers.get('Authorization')
+                if token:
+                    user_id = decode_token(token)
+                    username = user_id['identity']
+                    user = session.query(UserSHG).filter(
+                        UserSHG.username == username).first()
+                    if user:
+                        return user
+
+        except Exception as e:
+            return None
 
 
 class UserSHGMember(Base):
@@ -102,7 +168,7 @@ class PrevProjects(Base):
         "UserSHG"
     )
 
-    def __init__(description, tags, skills, shg):
+    def __init__(self, description, tags, skills, shg):
         self.description = description
         self.tags = tags
         self.skills = skills
