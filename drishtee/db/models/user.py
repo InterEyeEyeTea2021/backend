@@ -1,12 +1,18 @@
+from flask_bcrypt import check_password_hash, generate_password_hash
+from flask_login import UserMixin
+
+from flask_jwt_extended import decode_token
+
+
 from sqlalchemy import Column, DateTime, ForeignKey, Integer, String
 from sqlalchemy.orm import backref, relationship
-from sqlalchemy.schema import UniqueConstraint
 from datetime import datetime
 
-from drishtee.db.base import Base
+from drishtee.manage import login_manager
+from drishtee.db.base import Base, session_scope
 
 
-class UserSME(Base):
+class UserSME(UserMixin, Base):
 
     __tablename__ = "user_sme"
 
@@ -32,8 +38,37 @@ class UserSME(Base):
         self.bank_details = bank_details
         self.created_at = datetime.now()
 
+    def check_password(self, password):
+        return self.password == password
+        # return check_password_hash(self.password, password)
 
-class UserSHG(Base):
+    @staticmethod
+    @login_manager.user_loader
+    def load_user(id):
+        with session_scope() as session:
+            user = session.query(UserSME).filter(UserSME.id == id).first()
+            return user
+
+    @staticmethod
+    @login_manager.request_loader
+    def load_user_from_request(request):
+        try:
+            with session_scope() as session:
+                token = request.headers.get('Authorization')
+                if token:
+                    user_id = decode_token(token)
+                    username = user_id['identity']
+                    user = session.query(UserSME).filter(
+                        UserSME.username == username).first()
+                    if user:
+                        print(user)
+                        return user
+
+        except Exception as e:
+            return None
+
+
+class UserSHG(UserMixin, Base):
 
     __tablename__ = "user_shg"
 
@@ -62,6 +97,32 @@ class UserSHG(Base):
         self.order_size = order_size
         self.bank_details = bank_details
         self.created_at = datetime.now()
+
+    def check_password(self, password):
+        return check_password_hash(self.password, password)
+
+    @staticmethod
+    @login_manager.user_loader
+    def load_user(id):
+        with session_scope() as session:
+            return session.query(UserSHG).filter(UserSHG.id == id).first()
+
+    @staticmethod
+    @login_manager.request_loader
+    def load_user_from_request(request):
+        try:
+            with session_scope() as session:
+                token = request.headers.get('Authorization')
+                if token:
+                    user_id = decode_token(token)
+                    username = user_id['identity']
+                    user = session.query(UserSHG).filter(
+                        UserSHG.username == username).first()
+                    if user:
+                        return user
+
+        except Exception as e:
+            return None
 
 
 class UserSHGMember(Base):
@@ -102,7 +163,7 @@ class PrevProjects(Base):
         "UserSHG"
     )
 
-    def __init__(description, tags, skills, shg):
+    def __init__(self, description, tags, skills, shg):
         self.description = description
         self.tags = tags
         self.skills = skills

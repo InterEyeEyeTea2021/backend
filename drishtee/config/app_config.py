@@ -9,6 +9,7 @@ class Config:
 
     DEBUG = False
     SQLALCHEMY_DATABASE_URI = os.getenv("POSTGRES_URI")
+    SECRET_KEY = os.getenv("SECRET_KEY")
 
 
 class DevelopmentConfig(Config):
