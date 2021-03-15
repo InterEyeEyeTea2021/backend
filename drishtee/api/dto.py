@@ -7,6 +7,8 @@ from marshmallow import Schema, fields
 class DataDto:
     ns = Namespace("Data", description="Data Related operations")
 
+class TenderDto:
+    ns = Namespace("Tender", description="Tender operations")
 
 # class PostDto(Schema):
 #     caption = fields.String()

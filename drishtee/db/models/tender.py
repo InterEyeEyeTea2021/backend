@@ -14,9 +14,7 @@ class Tender(Base):
     media = relationship("Media")
     milestones = relationship("Milestone")
     sme_id = Column("sme_id", ForeignKey("user_sme.id"))
-    sme = relationship(
-        "UserSME"
-    )
+    sme = relationship("UserSME")
 
     def __init__(self, state, description, media, milestones, sme):
         self.state = state

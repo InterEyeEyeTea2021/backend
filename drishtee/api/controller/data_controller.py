@@ -11,6 +11,7 @@ data_ns = DataDto.ns
 parser = reqparse.RequestParser()
 
 
+
 @data_ns.route("/post")
 @data_ns.header("whoami")
 class SampleEndpoint(Resource):
@@ -21,3 +22,4 @@ class SampleEndpoint(Resource):
             abort(403, response)
         else:
             return response, status
+
