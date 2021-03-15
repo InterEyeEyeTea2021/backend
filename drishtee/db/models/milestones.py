@@ -15,7 +15,7 @@ class Milestone(Base):
     media = relationship("Media", backref="milestone")
 
     tender_id = Column(Integer, ForeignKey("tender.id"))
-    order_id = Column(Integer, ForeignKey("order.id"))
+    order_id = Column(Integer, ForeignKey("orders.id"))
 
     def __init__(self, description, status, media=None):
         self.description = description
