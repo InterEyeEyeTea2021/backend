@@ -14,20 +14,6 @@ import drishtee.db.models as models
 LOG = getLogger(__name__)
 
 
-def format_response(tender):
-    return {
-        "id": tender.id,
-        "state": tender.state,
-        "description": tender.description,
-        "media": [],
-        "milestones": [],
-        "sme": {
-            "id": tender.sme_id,
-            "name": tender.sme.name
-        }
-    }
-
-
 class AuthService:
 
     @staticmethod
