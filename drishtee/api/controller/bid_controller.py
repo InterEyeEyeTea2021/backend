@@ -40,3 +40,14 @@ class TenderBids(Resource):
         if args["id"]:
             return BidService.get_tender_bids(args["id"])
         return {"success": False}, 400
+
+@bid_ns.route("/acceptBid")
+class AcceptBid(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument("id", type=int)
+    @bid_ns.expect(parser)
+    def get(self):
+        args = parser.parse_args()
+        if args["id"]:
+            return BidService.accept_bid(args["id"], [])
+        return {"success": False}, 400
