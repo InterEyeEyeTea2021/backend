@@ -15,6 +15,9 @@ class BidDto:
 
 class MilestoneDto:
     ns = Namespace("Milestones", description="Milestone operations")
+
+class OrderDto:
+    ns = Namespace("Orders", description="Order operations")
 # class PostDto(Schema):
 #     caption = fields.String()
 #     share_date = fields.DateTime()

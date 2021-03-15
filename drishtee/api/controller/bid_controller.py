@@ -42,11 +42,10 @@ class TenderBids(Resource):
 
 @bid_ns.route("/acceptBid")
 class AcceptBid(Resource):
-    parser = reqparse.RequestParser()
-    parser.add_argument("id", type=int)
-    @bid_ns.expect(parser)
     def get(self):
-        args = parser.parse_args()
-        if args["id"]:
-            return BidService.accept_bid(args["id"], [])
+        info = request.json
+        id_ = info.get("id")
+        contract_uri = info.get("contract_uri")
+        if id_:
+            return BidService.accept_bid(id_, contract_uri)
         return {"success": False}, 400

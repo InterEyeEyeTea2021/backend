@@ -6,7 +6,6 @@ from drishtee.db.models import Tender, Media, Milestone, UserSME
 LOG = getLogger(__name__)
 
 class MilestoneService:
-
     @staticmethod
     def mark_completed(id_):
         with session_scope() as session:

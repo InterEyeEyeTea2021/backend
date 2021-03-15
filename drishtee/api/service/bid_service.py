@@ -44,13 +44,14 @@ class BidService:
             return {"success": False}, 404
 
     @staticmethod
-    def accept_bid(bid_id, contract):
+    def accept_bid(bid_id, contract_uri):
         # TODO: authenticated by SME
         with session_scope() as session:
             bid = session.query(Bid).filter(Bid.id == bid_id).all()[0]
             tender = session.query(Tender).filter(Tender.id == bid.tender_id).all()[0]
+            new_contract = Media(contract_uri, "image")
             new_order = Order(
-                "created", tender.description, tender.milestones, tender.sme, bid.shg, contract
+                "created", tender.description, tender.milestones, tender.sme, bid.shg, [new_contract]
             )
             session.add(new_order)
             return {"success": True}, 200
