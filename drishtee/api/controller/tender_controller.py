@@ -19,8 +19,35 @@ class TenderById(Resource):
         return {"success": False}, 400
 
 @tender_ns.route("/create")
-class CreateTender(resource):
+class CreateTender(Resource):
     @tender_ns.doc("Create tender")
     def post(self):
-        info = request.json
+        """
+        {
+            "sme_id": x,
+            "description": xx,
+            "media": [
+                {
+                    "uri": "xxxx",
+                    "type": image/video 
+                },
+            ]
+            "milestones": [
+                {
+                    "description": "XX",
+                    "media": []
+                }
+            ]
+        }
+        """
+        try:
+            info = request.json
+            sme_id = info["sme_id"]
+            description = info["description"]
+            media = info["media"]
+            milestones = info["milestones"]
+            return TenderService.create_tender(sme_id, description, media, milestones)
+        except KeyError:
+            abort(400)
+
         
