@@ -24,6 +24,7 @@ class CreateBid(Resource):
             shg_id = info["shg_id"]
             amount = info["amount"]
             tender_id = info["tender_id"]
+            # print(info)
 
             return BidService.create_bid(tender_id, amount, shg_id)
         except KeyError:

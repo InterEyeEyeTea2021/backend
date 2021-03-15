@@ -16,9 +16,10 @@ def format_response(session, bid: Bid):
 class BidService:
     @staticmethod
     def create_bid(tender_id, amount, shg_id):
+        # print(tender_id, amount, shg_id)
         with session_scope() as session:
-            existing_bid = session.query(Bid).filter(Bid.shg_id == shg_id and Bid.tender_id == tender_id).all()
-            if not existing_bid:
+            existing_bid = session.query(Bid).filter(Bid.shg_id == shg_id).filter(Bid.tender_id == tender_id).all()
+            if(len(existing_bid) == 0):
                 shg = session.query(UserSHG).filter(UserSHG.id == shg_id).all()[0]
                 tender = session.query(Tender).filter(Tender.id == tender_id).all()[0]
                 new_bid = Bid(amount, shg, tender)
@@ -30,13 +31,14 @@ class BidService:
                     }
                     return response_data
                 return {"success": False, "message": "Bid creation failed!"}, 400
+            # print(existing_bid[0].tender_id)
             return {"success": False, "message": "Bid exists"}, 400
 
     @staticmethod
     def get_tender_bids(tender_id):
         with session_scope() as session:
             bids = session.query(Bid).filter(Bid.tender_id == tender_id).all()
-            if bids:
+            if len(bids) > 0:
                 return {
                     "success": True,
                     "data": [format_response(session, b) for b in bids]
@@ -47,8 +49,8 @@ class BidService:
     def accept_bid(bid_id, contract_uri):
         # TODO: authenticated by SME
         with session_scope() as session:
-            bid = session.query(Bid).filter(Bid.id == bid_id).all()[0]
-            tender = session.query(Tender).filter(Tender.id == bid.tender_id).all()[0]
+            bid = session.query(Bid).filter(Bid.id == bid_id).first()
+            tender = session.query(Tender).filter(Tender.id == bid.tender_id).first()
             new_contract = Media(contract_uri, "image")
             new_order = Order(
                 "created", tender.description, tender.milestones, tender.sme, bid.shg, [new_contract]

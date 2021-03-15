@@ -40,7 +40,7 @@ class TenderService:
     def get_tender_by_id(id_):
         with session_scope() as session:
             tender = session.query(Tender).filter(Tender.id == id_).all()
-            if tender:
+            if len(tender) > 0:
                 data = {
                     "success": True,
                     "data": format_response(session, tender[0])
@@ -51,7 +51,7 @@ class TenderService:
     @staticmethod
     def create_tender(sme_id, description, media, milestones):
         with session_scope() as session:
-            user_sme = session.query(UserSME).filter(UserSME.id == sme_id).all()[0]
+            user_sme = session.query(UserSME).filter(UserSME.id == sme_id).first()
             media_obj = []
             milestone_obj = []
             for m in media:
