@@ -7,7 +7,17 @@ from marshmallow import Schema, fields
 class DataDto:
     ns = Namespace("Data", description="Data Related operations")
 
+class TenderDto:
+    ns = Namespace("Tender", description="Tender operations")
 
+class BidDto:
+    ns = Namespace("Bids", description="Bid operations")
+
+class MilestoneDto:
+    ns = Namespace("Milestones", description="Milestone operations")
+
+class OrderDto:
+    ns = Namespace("Orders", description="Order operations")
 # class PostDto(Schema):
 #     caption = fields.String()
 #     share_date = fields.DateTime()

@@ -12,7 +12,7 @@ class Media(Base):
     type_ = Column("type", String(32))
 
     milestone_id = Column(Integer, ForeignKey("milestone.id"))
-    order_id = Column(Integer, ForeignKey("order.id"))
+    order_id = Column(Integer, ForeignKey("orders.id"))
     tender_id = Column(Integer, ForeignKey("tender.id"))
 
     def __init__(self, uri, type_):

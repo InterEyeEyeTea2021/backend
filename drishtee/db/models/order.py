@@ -5,7 +5,7 @@ from drishtee.db.base import Base
 
 
 class Order(Base):
-    __tablename__ = "order"
+    __tablename__ = "orders"
 
     id = Column(Integer, primary_key=True)
     state = Column("state", String(32))
@@ -24,7 +24,7 @@ class Order(Base):
     )
     contract = relationship("Media", backref="order")
 
-    def __init__(state, description, milestones, sme, shg, contract):
+    def __init__(self, state, description, milestones, sme, shg, contract):
         self.state = state
         self.description = description
         self.milestones = milestones
