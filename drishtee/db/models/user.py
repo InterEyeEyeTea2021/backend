@@ -52,6 +52,7 @@ class UserSME(UserMixin, Base):
     @staticmethod
     @login_manager.request_loader
     def load_user_from_request(request):
+        print("Yo it reached the login manager")
         try:
             with session_scope() as session:
                 token = request.headers.get('Authorization')

@@ -143,8 +143,8 @@ class AuthService:
                         flask_login_user(user, remember=remem)
 
                         login_info = {
-                            'id': current_user.id,
-                            'username': current_user.username,
+                            'id': user.id,
+                            'username': user.username,
                         }
                         return login_info, 200
                     else:

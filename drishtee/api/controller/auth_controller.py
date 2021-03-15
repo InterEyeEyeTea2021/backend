@@ -2,11 +2,19 @@ from drishtee.api.dto import AuthDto
 from drishtee.api.service.auth_service import AuthService
 from flask import abort, request
 from flask_restx import Namespace, Resource, reqparse
-from flask_jwt_extended import create_access_token, create_refresh_token, decode_token
+from flask_jwt_extended import create_access_token, create_refresh_token, decode_token, get_jwt_identity, verify_jwt_in_request, jwt_required
 from flask_login import current_user, login_required
 
 auth_ns = AuthDto.ns
 user_auth = AuthDto.user_auth
+
+
+def get_identity_if_logedin():
+    try:
+        verify_jwt_in_request()
+        return get_jwt_identity()
+    except Exception:
+        pass
 
 
 @auth_ns.route("/login")
@@ -37,16 +45,24 @@ class LoginUser(Resource):
 
 @auth_ns.route('/refreshToken')
 class RefereshJWTToken(Resource):
-    @login_required
+    @jwt_required(optional=True)
     def post(self):
         try:
-            token = request.headers['Authorization']
-            user_id = decode_token(token)
-            username = user_id['identity']
+            current_identity = get_jwt_identity()
+            if not current_identity:
+                response_object = {
+                    'status': 'fail',
+                    'message': 'Not Authorized. '
+                }
+                return response_object, 401
+
+            access_token = create_access_token(identity=current_identity)
+            refresh_token = create_refresh_token(identity=current_identity)
+
             response_object = {
-                'username': username,
-                'access_token': create_access_token(identity=username),
-                'refresh_token': create_refresh_token(identity=username)
+                'username': current_identity,
+                'access_token': access_token,
+                'refresh_token': refresh_token
             }
             return response_object, 200
 
