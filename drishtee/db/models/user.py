@@ -39,8 +39,7 @@ class UserSME(UserMixin, Base):
         self.created_at = datetime.now()
 
     def check_password(self, password):
-        return self.password == password
-        # return check_password_hash(self.password, password)
+        return check_password_hash(self.password, password)
 
     @staticmethod
     @login_manager.user_loader
@@ -52,7 +51,6 @@ class UserSME(UserMixin, Base):
     @staticmethod
     @login_manager.request_loader
     def load_user_from_request(request):
-        print("Yo it reached the login manager")
         try:
             with session_scope() as session:
                 token = request.headers.get('Authorization')
