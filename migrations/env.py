@@ -1,4 +1,4 @@
-from drishtee.db.models import UserSME, UserSHG, PrevProjects, UserSHGMember, BankDetails, Media, Milestone, Order, Tender, Bid
+from drishtee.db.models import Order, UserSME, UserSHG, PrevProjects, UserSHGMember, BankDetails, Media, Milestone, Tender, Bid, Product
 from drishtee.db.base import Base
 
 from logging.config import fileConfig
