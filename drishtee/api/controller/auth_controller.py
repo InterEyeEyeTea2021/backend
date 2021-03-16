@@ -3,7 +3,6 @@ from drishtee.api.service.auth_service import AuthService
 from flask import abort, request
 from flask_restx import Namespace, Resource, reqparse
 from flask_jwt_extended import create_access_token, create_refresh_token, decode_token, get_jwt_identity, verify_jwt_in_request, jwt_required, get_jwt
-from flask_login import current_user, login_required
 
 auth_ns = AuthDto.ns
 user_auth = AuthDto.user_auth
@@ -23,7 +22,16 @@ def get_identity_if_logedin():
 class LoginUser(Resource):
     @auth_ns.doc("Login an existing user")
     @auth_ns.expect(user_auth)
+    @jwt_required(optional=True)
     def post(self):
+        current_identity = get_jwt_identity()
+        if current_identity is not None:
+            resp = {
+                'status': 'fail',
+                'message': 'Already logged in'
+            }
+            return resp, 401
+
         data = request.json
 
         if data['user_type'] == "SHG":
