@@ -59,3 +59,14 @@ class BidService:
             session.add(new_order)
             return {"success": True}, 200
         return {"success": False}, 400
+
+    @staticmethod
+    def get_shg_bids(shg_id):
+        with session_scope() as session:
+            bids = session.query(models.Bid).filter(models.Bid.shg_id == shg_id).all()
+            if len(bids) > 0:
+                return {
+                    "success": True,
+                    "data": [format_response(session, b) for b in bids]
+                }
+            return {"success": False}, 404

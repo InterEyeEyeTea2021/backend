@@ -80,3 +80,14 @@ class TenderService:
                 return response_data, 200
             return {"success": False}, 400
 
+    @staticmethod
+    def get_sme_tenders(sme_id):
+        with session_scope() as session:
+            tenders = session.query(models.Tender).filter(models.Tender.sme_id == sme_id).all()
+            return [format_response(session, t) for t in tenders], 200
+
+    @staticmethod
+    def get_all_tenders():
+        with session_scope() as session:
+            all_tenders = session.query(models.Tender).all()
+            return [format_response(session, t) for t in all_tenders], 200 

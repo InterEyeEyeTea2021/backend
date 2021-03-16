@@ -50,3 +50,12 @@ class AcceptBid(Resource):
         if id_:
             return BidService.accept_bid(id_, contract_uri)
         return {"success": False}, 400
+
+@bid_ns.route("/shg")
+class GetSHGBids(Resource):
+    @bid_ns.expect(parser)
+    def get(self):
+        args = parser.parse_args()
+        if args["id"]:
+            return BidService.get_shg_bids(args["id"])
+        return {"success": False}, 400

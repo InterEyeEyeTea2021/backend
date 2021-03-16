@@ -50,4 +50,17 @@ class CreateTender(Resource):
         except KeyError:
             abort(400)
 
-        
+@tender_ns.route("/sme")
+class GetSMETenders(Resource):
+    @tender_ns.doc("Get tender by sme ID")
+    @tender_ns.expect(parser)
+    def get(self):
+        args = parser.parse_args()
+        if args["id"]:
+            return TenderService.get_sme_tenders(args["id"])
+        return {"success": False}, 400
+
+@tender_ns.route("/all")
+class GetAllTenders(Resource):
+    def get(self):
+        return TenderService.get_all_tenders()
