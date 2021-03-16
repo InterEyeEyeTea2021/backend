@@ -3,6 +3,9 @@ from flask import current_app
 from flask_restx import Namespace, fields
 
 
+class UserDto:
+    ns = Namespace("User", description="User related operations")
+
 class DataDto:
     ns = Namespace("Data", description="Data Related operations")
 
