@@ -1,7 +1,7 @@
 """Initial Schema
 
 Revision ID: f658e322aa5d
-Revises: 
+Revises:
 Create Date: 2021-03-15 01:47:50.119217
 
 """
@@ -57,7 +57,7 @@ def upgrade():
     sa.ForeignKeyConstraint(['shg_id'], ['user_shg.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-    op.create_table('order',
+    op.create_table('orders',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('state', sa.String(length=32), nullable=True),
     sa.Column('description', sa.String(length=64), nullable=True),
@@ -101,7 +101,7 @@ def upgrade():
     sa.Column('status', sa.String(length=32), nullable=True),
     sa.Column('tender_id', sa.Integer(), nullable=True),
     sa.Column('order_id', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['order_id'], ['order.id'], ),
+    sa.ForeignKeyConstraint(['order_id'], ['orders.id'], ),
     sa.ForeignKeyConstraint(['tender_id'], ['tender.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -113,7 +113,7 @@ def upgrade():
     sa.Column('order_id', sa.Integer(), nullable=True),
     sa.Column('tender_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['milestone_id'], ['milestone.id'], ),
-    sa.ForeignKeyConstraint(['order_id'], ['order.id'], ),
+    sa.ForeignKeyConstraint(['order_id'], ['orders.id'], ),
     sa.ForeignKeyConstraint(['tender_id'], ['tender.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -127,7 +127,7 @@ def downgrade():
     op.drop_table('user_shg_member')
     op.drop_table('tender')
     op.drop_table('prev_projects')
-    op.drop_table('order')
+    op.drop_table('orders')
     op.drop_table('bid')
     op.drop_table('user_sme')
     op.drop_table('user_shg')

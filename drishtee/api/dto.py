@@ -33,7 +33,7 @@ class AuthDto:
         'branch_code': fields.String(required=True),
     })
 
-    new_shg = ns.model('sme_details', {
+    new_shg = ns.model('shg_details', {
         'name': fields.String(required=True, description="Name of User signing up"),
         'username': fields.String(required=True, description="Username of User signing up"),
         'password': fields.String(required=True, description='Signup Password'),
