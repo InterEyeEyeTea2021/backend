@@ -20,8 +20,8 @@ def format_user_sme(session, sme):
         "phone": sme.phone,
         "WAContact": sme.WAContact,
         "industry_type": sme.industry_type,
-        "bank_account_number": sme.bank_details.account_no,
-        "bank_ifsc_code": sme.bank_details.ifsc_code
+        "account_number": sme.bank_details.account_no,
+        "branch_code": sme.bank_details.ifsc_code
     }
 
 
@@ -34,11 +34,11 @@ def format_user_shg(session, shg):
         "phone": shg.phone,
         "WAContact": shg.WAContact,
         "industry_type": shg.industry_type,
-        "SHG_name": shg.SHG_Name,
-        "prod_capacity": shg.prod_capacity,
+        "name_SHG": shg.SHG_Name,
+        "production_cap": shg.prod_capacity,
         "order_size": shg.order_size,
-        "bank_account_number": shg.bank_details.account_no,
-        "bank_ifsc_code": shg.bank_details.ifsc_code
+        "account_number": shg.bank_details.account_no,
+        "branch_code": shg.bank_details.ifsc_code
     }
 
 
