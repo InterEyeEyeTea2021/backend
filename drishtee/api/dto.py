@@ -6,11 +6,14 @@ from flask_restx import Namespace, fields
 class UserDto:
     ns = Namespace("User", description="User related operations")
 
+
 class DataDto:
     ns = Namespace("Data", description="Data Related operations")
 
+
 class TenderDto:
     ns = Namespace("Tender", description="Tender operations")
+
 
 class AuthDto:
     ns = Namespace("Auth", description="Auth Related operations")
@@ -51,11 +54,25 @@ class AuthDto:
 class BidDto:
     ns = Namespace("Bids", description="Bid operations")
 
+
 class MilestoneDto:
     ns = Namespace("Milestones", description="Milestone operations")
 
+
 class OrderDto:
     ns = Namespace("Orders", description="Order operations")
+
+
+class ProductDto:
+    ns = Namespace("Products", description="Product operations")
+    new_product = ns.model('product_details', {
+        'name': fields.String(required=True),
+        'description': fields.String(required=True),
+        'image_uri': fields.String(required=True),
+        'min_size': fields.String(required=True),
+        'price': fields.String(required=True)
+    })
+
 # class PostDto(Schema):
 #     caption = fields.String()
 #     share_date = fields.DateTime()
