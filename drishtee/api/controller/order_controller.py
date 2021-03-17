@@ -11,6 +11,9 @@ parser.add_argument("id", type=int)
 
 @order_ns.route("/completeOrder")
 class CompleteOrder(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument("id", type=int)
+
     @order_ns.doc("Complete order by ID")
     @order_ns.expect(parser)
     def get(self):
@@ -24,7 +27,7 @@ class CompleteOrder(Resource):
 class GetOrderById(Resource):
     @order_ns.doc("Get order by ID")
     @order_ns.expect(parser)
-    def get(self, id):
+    def get(self):
         args = parser.parse_args()
         if args["id"]:
             return OrderService.get_order(args["id"])

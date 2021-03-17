@@ -6,6 +6,7 @@ import drishtee.db.models as models
 
 LOG = getLogger(__name__)
 
+
 def format_response(session, order):
     return {
         "order_id": order.id,
@@ -28,28 +29,33 @@ def format_response(session, order):
         "contract": order.contract[0].uri
     }
 
+
 class OrderService:
     @staticmethod
     def complete_order(order_id):
         with session_scope() as session:
-            order = session.query(models.Order).filter(models.Order.id == order_id).update({models.Order.state: "completed"}, synchronize_session = False)
+            order = session.query(models.Order).filter(models.Order.id == order_id).update(
+                {models.Order.state: "completed"}, synchronize_session=False)
             return {"success": True}, 200
 
     def get_order(order_id):
         with session_scope() as session:
-            order = session.query(models.Order).first()
+            order = session.query(models.Order).filter(
+                models.Order.id == order_id).first()
             if order:
-                return {"success": True, "data": format_response(order)}, 200
+                return {"success": True, "data": format_response(session, order)}, 200
             return {"success": False}, 404
 
     @staticmethod
     def get_sme_orders(sme_id):
         with session_scope() as session:
-            orders = session.query(models.Order).filter(models.Order.sme_id == sme_id).all()
+            orders = session.query(models.Order).filter(
+                models.Order.sme_id == sme_id).all()
             return [format_response(session, o) for o in orders], 200
 
     @staticmethod
     def get_shg_orders(shg_id):
         with session_scope() as session:
-            orders = session.query(models.Order).filter(models.Order.shg_id == shg_id).all()
+            orders = session.query(models.Order).filter(
+                models.Order.shg_id == shg_id).all()
             return [format_response(session, o) for o in orders], 200
