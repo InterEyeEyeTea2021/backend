@@ -11,6 +11,37 @@ import drishtee.db.models as models
 LOG = getLogger(__name__)
 
 
+def format_user_sme(session, sme):
+    return {
+        "user_type": "SME",
+        "sme_id": sme.id,
+        "name": sme.name,
+        "username": sme.username,
+        "phone": sme.phone,
+        "WAContact": sme.WAContact,
+        "industry_type": sme.industry_type,
+        "bank_account_number": sme.bank_details.account_no,
+        "bank_ifsc_code": sme.bank_details.ifsc_code
+    }
+
+
+def format_user_shg(session, shg):
+    return {
+        "user_type": "SHG",
+        "shg_id": shg.id,
+        "name": shg.name,
+        "username": shg.username,
+        "phone": shg.phone,
+        "WAContact": shg.WAContact,
+        "industry_type": shg.industry_type,
+        "SHG_name": shg.SHG_Name,
+        "prod_capacity": shg.prod_capacity,
+        "order_size": shg.order_size,
+        "bank_account_number": shg.bank_details.account_no,
+        "bank_ifsc_code": shg.bank_details.ifsc_code
+    }
+
+
 class AuthService:
 
     @staticmethod
@@ -46,11 +77,7 @@ class AuthService:
                             'message': 'Successfully logged in.',
                         }
 
-                        login_info = {
-                            'id': user.id,
-                            'username': user.username,
-                            'user_type': "SHG"
-                        }
+                        login_info = format_user_shg(session, user)
                         return login_info, 200
                     else:
                         response_object = {
@@ -96,11 +123,7 @@ class AuthService:
                         else:
                             remem = False
 
-                        login_info = {
-                            'id': user.id,
-                            'username': user.username,
-                            'user_type': "SME"
-                        }
+                        login_info = format_user_sme(session, user)
                         return login_info, 200
                     else:
                         response_object = {
