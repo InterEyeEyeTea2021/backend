@@ -43,8 +43,9 @@ class CreateTender(Resource):
         """)
     def post(self):
         try:
+            print(request.json)
             info = request.json
-            name = info["name"]
+            name = info["tender_name"]
             sme_id = info["sme_id"]
             description = info["description"]
             media = info["media"]
