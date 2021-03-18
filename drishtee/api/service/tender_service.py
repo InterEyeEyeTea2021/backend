@@ -8,6 +8,14 @@ import drishtee.db.models as models
 LOG = getLogger(__name__)
 
 
+def format_bid(session, bid):
+    return {
+        "amount": bid.bid_amount,
+        "shg_id": bid.shg_id,
+        "tender_id": bid.tender_id
+    }
+
+
 def format_response(session, tender):
     media = session.query(models.Media).filter(
         models.Media.tender_id == tender.id).all()
@@ -39,7 +47,8 @@ def format_response(session, tender):
             "name": tender.sme.name,
             "profile_image_uri": tender.sme.image_uri,
             "phone": tender.sme.phone
-        }
+        },
+        "bids": [format_bid(session, bid) for bid in tender.bids]
     }
 
 
@@ -78,7 +87,7 @@ class TenderService:
 
                 new_milestone = models.Milestone(
                     milestone["description"], "pending", milestone_media)
-                milestone_obj.append(new_milestone)    
+                milestone_obj.append(new_milestone)
                 session.add(new_milestone)
             new_tender = models.Tender(
                 name, "created", description, media_obj, milestone_obj, user_sme)
