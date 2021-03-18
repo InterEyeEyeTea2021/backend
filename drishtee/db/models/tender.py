@@ -8,6 +8,7 @@ class Tender(Base):
     __tablename__ = "tender"
 
     id = Column(Integer, primary_key=True)
+    name = Column("name", String(128))
     state = Column("state", String(32))
     description = Column("description", String(64))
 
@@ -17,7 +18,8 @@ class Tender(Base):
     sme_id = Column("sme_id", ForeignKey("user_sme.id"))
     sme = relationship("UserSME")
 
-    def __init__(self, state, description, media, milestones, sme):
+    def __init__(self, name, state, description, media, milestones, sme):
+        self.name = name
         self.state = state
         self.description = description
         self.media = media

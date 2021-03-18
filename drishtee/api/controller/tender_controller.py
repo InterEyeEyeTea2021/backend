@@ -8,6 +8,7 @@ tender_ns = TenderDto.ns
 parser = reqparse.RequestParser()
 parser.add_argument("id", type=int)
 
+
 @tender_ns.route("/id")
 class TenderById(Resource):
     @tender_ns.doc("Get tender by ID")
@@ -18,18 +19,18 @@ class TenderById(Resource):
             return TenderService.get_tender_by_id(args["id"])
         return {"success": False}, 400
 
+
 @tender_ns.route("/create")
 class CreateTender(Resource):
-    @tender_ns.doc("Create tender")
-    def post(self):
-        """
+    @tender_ns.doc("""
         {
+            "name": x,
             "sme_id": x,
             "description": xx,
             "media": [
                 {
                     "uri": "xxxx",
-                    "type": image/video 
+                    "type": image/video
                 },
             ]
             "milestones": [
@@ -39,16 +40,19 @@ class CreateTender(Resource):
                 }
             ]
         }
-        """
+        """)
+    def post(self):
         try:
             info = request.json
+            name = info["name"]
             sme_id = info["sme_id"]
             description = info["description"]
             media = info["media"]
             milestones = info["milestones"]
-            return TenderService.create_tender(sme_id, description, media, milestones)
+            return TenderService.create_tender(name, sme_id, description, media, milestones)
         except KeyError:
             abort(400)
+
 
 @tender_ns.route("/sme")
 class GetSMETenders(Resource):
@@ -59,6 +63,7 @@ class GetSMETenders(Resource):
         if args["id"]:
             return TenderService.get_sme_tenders(args["id"])
         return {"success": False}, 400
+
 
 @tender_ns.route("/all")
 class GetAllTenders(Resource):

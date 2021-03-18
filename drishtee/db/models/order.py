@@ -8,6 +8,7 @@ class Order(Base):
     __tablename__ = "orders"
 
     id = Column(Integer, primary_key=True)
+    name = Column("name", String(128))
     state = Column("state", String(32))
     description = Column("description", String(64))
 
@@ -26,7 +27,8 @@ class Order(Base):
     tender = relationship("Tender")
     tender_id = Column("tender_id", ForeignKey("tender.id"))
 
-    def __init__(self, state, description, milestones, sme, shg, contract, tender):
+    def __init__(self, name, state, description, milestones, sme, shg, contract):
+        self.name = name
         self.state = state
         self.description = description
         self.milestones = milestones

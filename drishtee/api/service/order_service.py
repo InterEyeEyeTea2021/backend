@@ -12,6 +12,7 @@ def format_response(session, order):
     media = session.query(models.Media).query(models.Media.tender_id == tender.id).all()
     return {
         "order_id": order.id,
+        "order_name": order.name,
         "state": order.state,
         "description": order.description,
         "milestones": [
