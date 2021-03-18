@@ -4,13 +4,10 @@ from datetime import datetime
 
 with session_scope() as session:
     bank_details = BankDetails(
-        "hjdsfg", "hkjdsgf"
-    )
-    new_user_sme = UserSME(
-        "name", "username", "password", "phone", "WAContact", "industry_type", bank_details
+        "ajkdsjf", "dshfsdif"
     )
     # user_sme = session.query(UserSME).filter(UserSME.id == 1).all()[0]
     # new_tender = Tender("created", "dsakjfh", [], [], new_user_sme)
-    # new_user_shg = UserSHG("dsuyihfkjhf", "aisuhd", "adsfuhiua", "2345", "random", "23", "34", bank_details)
-    session.add(new_user_sme)
+    new_user_shg = UserSHG("djsfh", "sdfhdsisdhf", "hdsfghj", "98068476", "98347598", "jshfjdshf", "random", "837429", "100", "https://google.com", bank_details)
+    session.add(new_user_shg)
     session.add(bank_details)

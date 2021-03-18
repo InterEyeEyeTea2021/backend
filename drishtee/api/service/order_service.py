@@ -7,8 +7,8 @@ import drishtee.db.models as models
 LOG = getLogger(__name__)
 
 def format_response(session, order):
-    tender = session.query(models.Tender).query(models.Tender.id == order.tender_id).first()
-    media = session.query(models.Media).query(models.Media.tender_id == tender.id).all()
+    tender = session.query(models.Tender).filter(models.Tender.id == order.tender_id).first()
+    media = session.query(models.Media).filter(models.Media.tender_id == tender.id).all()
     return {
         "order_id": order.id,
         "state": order.state,
