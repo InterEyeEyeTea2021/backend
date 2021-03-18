@@ -16,6 +16,7 @@ def format_user_sme(session, sme):
         "user_type": "SME",
         "sme_id": sme.id,
         "name": sme.name,
+        "profile_image_uri": sme.image_uri,
         "username": sme.username,
         "phone": sme.phone,
         "WAContact": sme.WAContact,
@@ -31,6 +32,7 @@ def format_user_shg(session, shg):
         "shg_id": shg.id,
         "name": shg.name,
         "username": shg.username,
+        "profile_image_uri": shg.image_uri,
         "phone": shg.phone,
         "WAContact": shg.WAContact,
         "industry_type": shg.industry_type,
@@ -166,7 +168,7 @@ class AuthService:
                     data.get("account_number"), data.get("branch_code"))
 
                 user = models.UserSME(data.get("name"), data.get("username"), data.get(
-                    "password"), data.get("phone"), data.get("WAContact"), data.get("industry_type"), data.get("image_uri"), bank)
+                    "password"), data.get("phone"), data.get("WAContact"), data.get("industry_type"), data.get("profile_`image_uri`"), bank)
 
                 session.add(user)
             response_object = {
@@ -204,7 +206,7 @@ class AuthService:
 
                 user = models.UserSHG(data.get("name"), data.get("username"), data.get(
                     "password"), data.get("phone"), data.get("WAContact"), data.get("name_SHG"),
-                    data.get("industry_type"), data.get("production_cap"), data.get("order_size"), data.get("image_uri"), bank)
+                    data.get("industry_type"), data.get("production_cap"), data.get("order_size"), data.get("profile_image_uri"), bank)
 
                 session.add(user)
             response_object = {

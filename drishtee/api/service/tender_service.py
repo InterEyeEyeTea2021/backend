@@ -36,7 +36,9 @@ def format_response(session, tender):
         ],
         "sme": {
             "id": tender.sme_id,
-            "name": tender.sme.name
+            "name": tender.sme.name,
+            "profile_image_uri": tender.sme.image_uri,
+            "phone": tender.sme.phone
         }
     }
 
