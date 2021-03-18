@@ -22,25 +22,6 @@ class TenderById(Resource):
 
 @tender_ns.route("/create")
 class CreateTender(Resource):
-    @tender_ns.doc("""
-        {
-            "name": x,
-            "sme_id": x,
-            "description": xx,
-            "media": [
-                {
-                    "uri": "xxxx",
-                    "type": image/video
-                },
-            ]
-            "milestones": [
-                {
-                    "description": "XX",
-                    "media": []
-                }
-            ]
-        }
-        """)
     def post(self):
         try:
             print(request.json)
