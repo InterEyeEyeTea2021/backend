@@ -13,6 +13,7 @@ def format_user(sme):
         "phone": sme.phone,
         "WAContact": sme.WAContact,
         "industry_type": sme.industry_type,
+        "image_uri": sme.image_uri
     }
 
 class UserService:

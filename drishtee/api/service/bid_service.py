@@ -54,7 +54,7 @@ class BidService:
             tender = session.query(models.Tender).filter(models.Tender.id == bid.tender_id).first()
             new_contract = models.Media(contract_uri, "image")
             new_order = models.Order(
-                "created", tender.description, tender.milestones, tender.sme, bid.shg, [new_contract]
+                "created", tender.description, tender.milestones, tender.sme, bid.shg, [new_contract], tender
             )
             session.add(new_order)
             return {"success": True}, 200

@@ -26,11 +26,12 @@ class UserSME(UserMixin, Base):
     WAContact = Column("WAContact", String(13))
 
     industry_type = Column("industry_type", String(128))
+    image_uri = Column("image_uri", String(128))
 
     bank_details_id = Column("bank_details_id", ForeignKey("bank_details.id"))
     bank_details = relationship("BankDetails")
 
-    def __init__(self, name, username, password, phone, WAContact, industry_type, bank_details=None):
+    def __init__(self, name, username, password, phone, WAContact, industry_type, image_uri, bank_details=None):
         self.name = name
         self.username = username
         self.password = generate_password_hash(password).decode("utf-8")
@@ -38,6 +39,7 @@ class UserSME(UserMixin, Base):
         self.WAContact = WAContact
         self.industry_type = industry_type
         self.bank_details = bank_details
+        self.image_uri = image_uri
         self.created_at = datetime.now()
 
     def check_password(self, password):
@@ -86,11 +88,12 @@ class UserSHG(UserMixin, Base):
     industry_type = Column("industry_type", String(128))
     prod_capacity = Column("prod_capacity", String(128))
     order_size = Column("order_size", String(128))
+    image_uri = Column("image_uri", String(128))
 
     bank_details_id = Column("bank_details_id", ForeignKey("bank_details.id"))
     bank_details = relationship("BankDetails")
 
-    def __init__(self, name, username, password, phone, WAContact, SHG_Name, industry_type, prod_capacity, order_size, bank_details=None):
+    def __init__(self, name, username, password, phone, WAContact, SHG_Name, industry_type, prod_capacity, order_size, image_uri, bank_details=None):
         self.name = name
         self.username = username
         self.password = generate_password_hash(password).decode("utf-8")
@@ -100,6 +103,7 @@ class UserSHG(UserMixin, Base):
         self.industry_type = industry_type
         self.prod_capacity = prod_capacity
         self.order_size = order_size
+        self.image_uri = image_uri
         self.bank_details = bank_details
         self.created_at = datetime.now()
 
