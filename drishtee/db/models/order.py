@@ -27,7 +27,7 @@ class Order(Base):
     tender = relationship("Tender")
     tender_id = Column("tender_id", ForeignKey("tender.id"))
 
-    def __init__(self, name, state, description, milestones, sme, shg, contract):
+    def __init__(self, name, state, description, milestones, sme, shg, contract, tender):
         self.name = name
         self.state = state
         self.description = description

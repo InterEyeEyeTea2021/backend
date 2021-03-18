@@ -62,8 +62,7 @@ class BidService:
             new_contract = models.Media(contract_uri, "image")
             new_order = models.Order(
                 tender.name, "created", tender.description, tender.milestones, tender.sme, bid.shg, [
-                    new_contract]
-
+                    new_contract], tender
             )
             session.add(new_order)
             return {"success": True}, 200
