@@ -24,6 +24,8 @@ class Order(Base):
         "UserSHG"
     )
     contract = relationship("Media", backref="order")
+    tender = relationship("Tender")
+    tender_id = Column("tender_id", ForeignKey("tender.id"))
 
     def __init__(self, name, state, description, milestones, sme, shg, contract):
         self.name = name
@@ -33,3 +35,4 @@ class Order(Base):
         self.sme = sme
         self.shg = shg
         self.contract = contract
+        self.tender = tender

@@ -63,6 +63,7 @@ class BidService:
             new_order = models.Order(
                 tender.name, "created", tender.description, tender.milestones, tender.sme, bid.shg, [
                     new_contract]
+
             )
             session.add(new_order)
             return {"success": True}, 200

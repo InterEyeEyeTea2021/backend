@@ -166,7 +166,7 @@ class AuthService:
                     data.get("account_number"), data.get("branch_code"))
 
                 user = models.UserSME(data.get("name"), data.get("username"), data.get(
-                    "password"), data.get("phone"), data.get("WAContact"), data.get("industry_type"), bank)
+                    "password"), data.get("phone"), data.get("WAContact"), data.get("industry_type"), data.get("image_uri"), bank)
 
                 session.add(user)
             response_object = {
@@ -204,7 +204,7 @@ class AuthService:
 
                 user = models.UserSHG(data.get("name"), data.get("username"), data.get(
                     "password"), data.get("phone"), data.get("WAContact"), data.get("name_SHG"),
-                    data.get("industry_type"), data.get("production_cap"), data.get("order_size"), bank)
+                    data.get("industry_type"), data.get("production_cap"), data.get("order_size"), data.get("image_uri"), bank)
 
                 session.add(user)
             response_object = {
