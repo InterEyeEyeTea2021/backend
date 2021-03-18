@@ -8,6 +8,8 @@ LOG = getLogger(__name__)
 
 
 def format_response(session, order):
+    tender = session.query(models.Tender).query(models.Tender.id == order.tender_id).first()
+    media = session.query(models.Media).query(models.Media.tender_id == tender.id).all()
     return {
         "order_id": order.id,
         "state": order.state,
@@ -19,14 +21,20 @@ def format_response(session, order):
                 "media": [
                     {
                         "uri": mmedia.uri,
-                        "type": mmedia.type
+                        "type": mmedia.type_
                     } for mmedia in mi.media
                 ]
             } for mi in order.milestones
         ],
         "sme_id": order.sme_id,
         "shg_id": order.shg_id,
-        "contract": order.contract[0].uri
+        "contract": order.contract[0].uri,
+        "media": [
+            {
+                "uri": m.uri,
+                "type": m.type_
+            } for m in media
+        ]
     }
 
 

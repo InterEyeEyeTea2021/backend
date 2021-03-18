@@ -16,7 +16,7 @@ def format_response(session, tender):
         "state": tender.state,
         "description": tender.description,
         "media": [
-            {"uri": m.uri, "type": m.uri} for m in media
+            {"uri": m.uri, "type": m.type_} for m in media
         ],
         "milestones": [
             {
@@ -25,7 +25,7 @@ def format_response(session, tender):
                 "media": [
                     {
                         "uri": mmedia.uri,
-                        "type": mmedia.type
+                        "type": mmedia.type_
                     } for mmedia in mi.media
                 ]
             } for mi in milestones
@@ -66,10 +66,11 @@ class TenderService:
                     new_mile_media = models.Media(m["uri"], m["type"])
                     milestone_media.append(new_mile_media)
                     session.add(new_mile_media)
-                session.flush()
+                # session.flush()
                 new_milestone = models.Milestone(milestone["description"], "pending", milestone_media)
+                milestone_obj.append(new_milestone)
                 session.add(new_milestone)
-            session.flush()
+            # session.flush()
             new_tender = models.Tender("created", description, media_obj, milestone_obj, user_sme)
             if new_tender:
                 session.add(new_tender)
