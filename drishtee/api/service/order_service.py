@@ -8,9 +8,9 @@ LOG = getLogger(__name__)
 
 
 def format_response(session, order):
-    tender = session.query(models.Tender).query(
+    tender = session.query(models.Tender).filter(
         models.Tender.id == order.tender_id).first()
-    media = session.query(models.Media).query(
+    media = session.query(models.Media).filter(
         models.Media.tender_id == tender.id).all()
 
     return {
