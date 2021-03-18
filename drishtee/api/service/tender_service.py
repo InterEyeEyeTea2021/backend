@@ -16,7 +16,7 @@ def format_response(session, tender):
         "state": tender.state,
         "description": tender.description,
         "media": [
-            {"uri": m.uri, "type": m.uri} for m in media
+            {"uri": m.uri, "type": m.type_} for m in media
         ],
         "milestones": [
             {
