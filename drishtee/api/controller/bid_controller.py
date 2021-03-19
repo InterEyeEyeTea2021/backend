@@ -43,7 +43,7 @@ class TenderBids(Resource):
 
 @bid_ns.route("/acceptBid")
 class AcceptBid(Resource):
-    def get(self):
+    def post(self):
         info = request.json
         id_ = info.get("id")
         contract_uri = info.get("contract_uri")
