@@ -9,6 +9,7 @@ LOG = getLogger(__name__)
 
 def format_response(session, bid):
     return {
+        "id": bid.id,
         "amount": bid.bid_amount,
         "shg_id": bid.shg_id,
         "tender_id": bid.tender_id
