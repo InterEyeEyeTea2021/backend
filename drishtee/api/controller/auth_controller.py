@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from drishtee.api.dto import AuthDto
 from drishtee.api.service.auth_service import AuthService
 from flask import abort, request
@@ -48,9 +50,9 @@ class LoginUser(Resource):
                 'user_type': resp[0]['user_type']
             }
             access_token = create_access_token(
-                identity=resp[0]['username'], additional_claims=additional_claims)
+                identity=resp[0]['username'], additional_claims=additional_claims, expires_delta=timedelta(days=7))
             refresh_token = create_refresh_token(
-                identity=resp[0]['username'], additional_claims=additional_claims)
+                identity=resp[0]['username'], additional_claims=additional_claims, expires_delta=timedelta(days=7))
 
             resp[0]['access_token'] = access_token
             resp[0]['refresh_token'] = refresh_token
@@ -81,16 +83,19 @@ class RefereshJWTToken(Resource):
         try:
             current_identity = get_jwt_identity()
             claims = get_jwt()
-            print(current_identity)
             if not current_identity:
                 response_object = {
                     'status': 'fail',
                     'message': 'Not Authorized. '
                 }
                 return response_object, 401
-
-            access_token = create_access_token(identity=current_identity)
-            refresh_token = create_refresh_token(identity=current_identity)
+            additional_claims = {
+                'user_type': claims['user_type']
+            }
+            access_token = create_access_token(
+                identity=current_identity, additional_claims=additional_claims, expires_delta=timedelta(days=7))
+            refresh_token = create_refresh_token(
+                identity=current_identity, additional_claims=additional_claims, expires_delta=timedelta(days=7))
 
             response_object = {
                 'username': current_identity,
