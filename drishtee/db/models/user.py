@@ -26,7 +26,7 @@ class UserSME(UserMixin, Base):
     WAContact = Column("WAContact", String(13))
 
     industry_type = Column("industry_type", String(128))
-    image_uri = Column("image_uri", String(128))
+    image_uri = Column("image_uri", String(256))
 
     bank_details_id = Column("bank_details_id", ForeignKey("bank_details.id"))
     bank_details = relationship("BankDetails")
@@ -88,7 +88,7 @@ class UserSHG(UserMixin, Base):
     industry_type = Column("industry_type", String(128))
     prod_capacity = Column("prod_capacity", String(128))
     order_size = Column("order_size", String(128))
-    image_uri = Column("image_uri", String(128))
+    image_uri = Column("image_uri", String(256))
 
     bank_details_id = Column("bank_details_id", ForeignKey("bank_details.id"))
     bank_details = relationship("BankDetails")

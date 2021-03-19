@@ -8,7 +8,7 @@ class Media(Base):
     __tablename__ = "media"
 
     id = Column(Integer, primary_key=True)
-    uri = Column("uri", String(64))
+    uri = Column("uri", String(256))
     type_ = Column("type", String(32))
 
     milestone_id = Column(Integer, ForeignKey("milestone.id"))
