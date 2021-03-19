@@ -14,7 +14,7 @@ api_bp = Blueprint("api", __name__)
 
 api = Api(
     api_bp,
-    title="Flask-RESTPlus common backend for LTT-KGP",
+    title="Flask-RESTPlus common backend for GrameenSetu",
     version="1.0",
     description="a boilerplate for flask restplus web service",
 )
