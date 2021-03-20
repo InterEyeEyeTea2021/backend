@@ -23,6 +23,7 @@ def format_user_shg(shg):
         "phone": shg.phone,
         "WAContact": shg.WAContact,
         "industry_type": shg.industry_type,
+        "image_uri": shg.image_uri
     }
 
 class UserService:
