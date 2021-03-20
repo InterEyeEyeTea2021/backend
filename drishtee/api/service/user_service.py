@@ -20,10 +20,13 @@ def format_user_shg(shg):
     return {
         "shg_id": shg.id,
         "name": shg.name,
+        "username": shg.username,
         "phone": shg.phone,
         "WAContact": shg.WAContact,
         "industry_type": shg.industry_type,
-        "image_uri": shg.image_uri
+        "image_uri": shg.image_uri,
+        "prod_capacity": shg.prod_capacity,
+        "order_size": shg.order_size
     }
 
 class UserService:
