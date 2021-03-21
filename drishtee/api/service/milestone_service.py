@@ -22,12 +22,14 @@ class MilestoneService:
             tender.milestones.append(new_milestone)
             return {"success": True, "milestone_id": new_milestone.id}, 200
 
-    def update_milestone(milestone_id, description, image_uri):
+    def update_milestone(milestone_id, description, image_uri, status):
         with session_scope() as session:
             if(description):
                 milestone = session.query(models.Milestone).filter(models.Milestone.id == milestone_id).update({models.Milestone.description: description})
             if(image_uri):
                 milestone = session.query(models.Media).filter(models.Media.milestone_id == milestone_id).update({models.Media.uri: image_uri})
+            if(status):
+                milestone = session.query(models.Milestone).filter(models.Milestone.id == id_).update({models.Milestone.status: "completed"})
             return {"success": True}, 200
             
 
