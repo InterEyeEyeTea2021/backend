@@ -9,26 +9,6 @@ parser = reqparse.RequestParser()
 parser.add_argument("id", type=int)
 
 
-<< << << < HEAD
-
-
-@milestone_ns.route("/markComplete")
-class CompleteMilestone(Resource):
-    parser = reqparse.RequestParser()
-    parser.add_argument("id", type=int)
-
-    @milestone_ns.expect(parser)
-    def get(self):
-        args = parser.parse_args()
-        if args["id"]:
-            return MilestoneService.mark_completed(args["id"])
-        return {"success": False}, 400
-
-
-== == == =
->>>>>> > cc722ca1d2bf87fc8a02fe06fca219f7ff2239cc
-
-
 @milestone_ns.route("/create")
 class CreateMilestone(Resource):
     # parser = reqparse.RequestParser()
