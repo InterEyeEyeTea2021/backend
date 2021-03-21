@@ -21,6 +21,7 @@ def format_response(session, order):
         "milestones": [
             {
                 "id": mi.id,
+                "name": mi.name,
                 "description": mi.description,
                 "status": mi.status,
                 "media": [

@@ -34,6 +34,7 @@ def format_response(session, tender):
         "milestones": [
             {
                 "id": mi.id,
+                "name": mi.name,
                 "description": mi.description,
                 "status": mi.status,
                 "media": [
@@ -87,8 +88,8 @@ class TenderService:
                     milestone_media.append(new_mile_media)
                     session.add(new_mile_media)
 
-                new_milestone = models.Milestone(
-                    milestone["description"], "pending", milestone_media)
+                new_milestone = models.Milestone(milestone["name"],
+                                                 milestone["description"], "pending", milestone_media)
                 milestone_obj.append(new_milestone)
                 session.add(new_milestone)
             new_tender = models.Tender(

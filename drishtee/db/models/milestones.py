@@ -9,6 +9,7 @@ class Milestone(Base):
     __tablename__ = "milestone"
 
     id = Column(Integer, primary_key=True)
+    name = Column("name", String(64))
     description = Column("description", String(64))
     status = Column("status", String(32))
 
@@ -17,7 +18,8 @@ class Milestone(Base):
     tender_id = Column(Integer, ForeignKey("tender.id"))
     order_id = Column(Integer, ForeignKey("orders.id"))
 
-    def __init__(self, description, status, media=None):
+    def __init__(self, name, description, status, media=None):
+        self.name = name
         self.description = description
         self.status = status
         self.media = media
