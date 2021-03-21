@@ -33,6 +33,7 @@ def format_response(session, tender):
         ],
         "milestones": [
             {
+                "id": mi.id,
                 "description": mi.description,
                 "status": mi.status,
                 "media": [
