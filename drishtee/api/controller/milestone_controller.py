@@ -39,5 +39,4 @@ class UpdateMilestone(Resource):
         milestone_id = data.get("milestone_id")
         description = data.get("description")
         image_uri = data.get("image_uri")
-        print(milestone_id, description, image_uri)
         return MilestoneService.update_milestone(milestone_id, description, image_uri)
