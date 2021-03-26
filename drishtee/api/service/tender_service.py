@@ -45,6 +45,7 @@ def format_response(session, tender):
                 ]
             } for mi in milestones
         ],
+        "plan_uri": tender.plan_uri,
         "sme": {
             "id": tender.sme_id,
             "name": tender.sme.name,
@@ -71,7 +72,7 @@ class TenderService:
             return {"success": False}, 404
 
     @staticmethod
-    def create_tender(name, sme_id, description, media, milestones, plan):
+    def create_tender(name, sme_id, description, media, milestones, plan_uri):
         with session_scope() as session:
             user_sme = session.query(models.UserSME).filter(
                 models.UserSME.id == sme_id).first()
@@ -93,7 +94,7 @@ class TenderService:
                 milestone_obj.append(new_milestone)
                 session.add(new_milestone)
             new_tender = models.Tender(
-                name, "created", description, media_obj, milestone_obj, user_sme)
+                name, "created", description, media_obj, milestone_obj, user_sme, plan_uri)
             if new_tender:
                 session.add(new_tender)
                 response_data = {
