@@ -9,7 +9,7 @@ class Media(Base):
 
     id = Column(Integer, primary_key=True)
     uri = Column("uri", String(256))
-    type_ = Column("type", String(32))
+    type_ = Column("type", String(256))
 
     milestone_id = Column(Integer, ForeignKey("milestone.id"))
     order_id = Column(Integer, ForeignKey("orders.id"))

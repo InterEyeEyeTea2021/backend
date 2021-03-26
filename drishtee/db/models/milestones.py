@@ -10,8 +10,8 @@ class Milestone(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column("name", String(64))
-    description = Column("description", String(64))
-    status = Column("status", String(32))
+    description = Column("description", String(256))
+    status = Column("status", String(256))
 
     media = relationship("Media", backref="milestone")
 
