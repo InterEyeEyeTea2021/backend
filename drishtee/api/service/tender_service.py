@@ -45,11 +45,6 @@ def format_response(session, tender):
                 ]
             } for mi in milestones
         ],
-        "plan":
-        {
-            "uri": tender.plan.uri,
-            "type": tender.plan.type_
-        },
         "sme": {
             "id": tender.sme_id,
             "name": tender.sme.name,
@@ -97,9 +92,8 @@ class TenderService:
                                                  milestone["description"], "pending", milestone_media)
                 milestone_obj.append(new_milestone)
                 session.add(new_milestone)
-            plan = models.Media(plan["uri"], plan["type"])
             new_tender = models.Tender(
-                name, "created", description, media_obj, milestone_obj, user_sme, plan)
+                name, "created", description, media_obj, milestone_obj, user_sme)
             if new_tender:
                 session.add(new_tender)
                 response_data = {
