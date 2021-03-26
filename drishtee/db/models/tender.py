@@ -8,9 +8,9 @@ class Tender(Base):
     __tablename__ = "tender"
 
     id = Column(Integer, primary_key=True)
-    name = Column("name", String(128))
-    state = Column("state", String(32))
-    description = Column("description", String(64))
+    name = Column("name", String(256))
+    state = Column("state", String(256))
+    description = Column("description", String(256))
 
     media = relationship("Media")
     milestones = relationship("Milestone")
