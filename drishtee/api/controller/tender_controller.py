@@ -31,7 +31,8 @@ class CreateTender(Resource):
             description = info["description"]
             media = info["media"]
             milestones = info["milestones"]
-            return TenderService.create_tender(name, sme_id, description, media, milestones)
+            plan = info["plan"]
+            return TenderService.create_tender(name, sme_id, description, media, milestones, plan)
         except KeyError:
             abort(400)
 

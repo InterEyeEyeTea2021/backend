@@ -14,6 +14,7 @@ class Media(Base):
     milestone_id = Column(Integer, ForeignKey("milestone.id"))
     order_id = Column(Integer, ForeignKey("orders.id"))
     tender_id = Column(Integer, ForeignKey("tender.id"))
+    tender_plan_id = Column(Integer, ForeignKey("tender.id"))
 
     def __init__(self, uri, type_):
         self.uri = uri

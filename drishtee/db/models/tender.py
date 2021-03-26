@@ -13,12 +13,14 @@ class Tender(Base):
     description = Column("description", String(256))
 
     media = relationship("Media")
+    plan = relationship(
+        "Media", primaryjoin="media.tender_plan_id == tender.id")
     milestones = relationship("Milestone")
     bids = relationship("Bid", back_populates="tender")
     sme_id = Column("sme_id", ForeignKey("user_sme.id"))
     sme = relationship("UserSME")
 
-    def __init__(self, name, state, description, media, milestones, sme):
+    def __init__(self, name, state, description, media, milestones, sme, plan):
         self.name = name
         self.state = state
         self.description = description
@@ -26,6 +28,7 @@ class Tender(Base):
         self.milestones = milestones
         self.sme = sme
         self.bids = []
+        self.plan = plan
 
 
 class Bid(Base):
