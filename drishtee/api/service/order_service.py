@@ -18,6 +18,7 @@ def format_response(session, order):
         "order_name": order.name,
         "state": order.state,
         "description": order.description,
+        "plan_uri": order.plan_uri,
         "milestones": [
             {
                 "id": mi.id,
