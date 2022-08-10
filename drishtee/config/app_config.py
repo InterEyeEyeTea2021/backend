@@ -8,9 +8,9 @@ class Config:
     """Base Config."""
 
     DEBUG = False
-    SQLALCHEMY_DATABASE_URI = os.getenv("POSTGRES_URI")
-    SECRET_KEY = os.getenv("SECRET_KEY")
-    SECURITY_PASSWORD_SALT = os.getenv('SECURITY_PASSWORD_SALT')
+    SQLALCHEMY_DATABASE_URI = "postgresql+psycopg2://ubuntu:ubuntu@5432/grameensetu"
+    SECRET_KEY = "tunaktunaktun"
+    SECURITY_PASSWORD_SALT = "youhavetunakedyourlasttun"
 
 
 class DevelopmentConfig(Config):
@@ -29,7 +29,7 @@ class TestingConfig(Config):
     TESTING = True
     HOST = "127.0.0.1"
     PORT = 5000
-    SQLALCHEMY_DATABASE_URI = os.getenv("TESTING_DATABASE_URI")
+    SQLALCHEMY_DATABASE_URI = "postgresql+psycopg2://ubuntu:ubuntu@5432/grameensetu"
     PRESERVE_CONTEXT_ON_EXCEPTION = True
     SQLALCHEMY_TRACK_MODIFICATIONS = True
 

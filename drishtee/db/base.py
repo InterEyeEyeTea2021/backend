@@ -6,7 +6,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-engine = create_engine(os.getenv("POSTGRES_URI"))
+engine = create_engine("postgresql+psycopg2://ubuntu:ubuntu@5432/grameensetu")
 # use session_factory() to get a new Session
 _SessionFactory = sessionmaker(bind=engine)
 Base = declarative_base()
